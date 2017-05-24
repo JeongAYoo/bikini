@@ -76,6 +76,8 @@ void Read_command(void){
     }
     printf("\n게임으로 돌아가려면 아무 키나 누르십시오.");
 
+    MoveCount-=1;
+
     if(getch()){
     fclose(fp);
     }

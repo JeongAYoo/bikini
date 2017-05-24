@@ -16,7 +16,7 @@ int ClearCount[5] = {};
 char Undo_SaveMap[5][SIZE_MAP_Y][SIZE_MAP_X];
 int UndoCount = 0;
 int MoveCount = 0;
-char UserName;
+char UserName[10];
 
 clock_t Map_start, Map_stop, Map_stopEnd, Map_end;  // 현 시간을 저장할 변수
 float gap;
@@ -114,7 +114,9 @@ void PlayerMove(void){
    int UndoCheck = 0;
    char ch;
    ch = getch();
-   if(ch == 'e'){
+  if(ch == 'e'){
+      system("clear");
+      printf("SEE YOU %s....\n", &UserName);
       exit(0);
    }
    else if (ch =='h'||ch == 'H'||ch =='l'||ch == 'L'||ch =='k'||ch == 'K'||ch =='j'||ch == 'J'||ch =='u'||ch == 'U'){

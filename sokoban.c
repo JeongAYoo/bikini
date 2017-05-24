@@ -33,6 +33,7 @@ void Undo_SaveMapFunc();
 void Undo_LoadMapFunc();
 void MapA();
 void Read_command();
+void Read_rank();
 void Option(char);
 
 void time_rank();
@@ -67,6 +68,27 @@ void Read_command(void){
     char ch;
 
     FILE *fp = fopen("command_explain.txt", "r");
+
+    if(fp == NULL){
+        printf("파일을 열 수 없음\n");
+        return;
+    }
+    while(fscanf(fp,"%c", &ch) != EOF){
+        printf("%c", ch);
+    }
+    printf("\n게임으로 돌아가려면 아무 키나 누르십시오.");
+
+    MoveCount-=1;
+
+    if(getch()){
+    fclose(fp);
+    }
+}
+
+void Read_rank(void){
+    char ch;
+
+    FILE *fp = fopen("ranking.txt", "r");
 
     if(fp == NULL){
         printf("파일을 열 수 없음\n");
@@ -172,6 +194,14 @@ void Option(char ch){
       DrawMap();
       getPlayerXY();
       return;
+    case 't':  //랭킹 보기
+    case 'T':
+      Map_stop = clock();
+      system("clear");
+      Read_rank();
+      DrawMap();
+      Map_stopEnd = clock();  // d 옵션을 종료한 시간
+      break;
     case '@':
       StageNumber++;
       Map_end = clock();   // <1> 번으로 이동할 것 -test용

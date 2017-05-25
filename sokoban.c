@@ -17,6 +17,7 @@ char Undo_SaveMap[5][SIZE_MAP_Y][SIZE_MAP_X];
 int UndoCount = 0;
 int MoveCount = 0;
 char UserName[10];
+int dx=0,dy=0; // 값 전달을 위해 전역변수로 바꿈
 
 clock_t Map_start, Map_stop, Map_stopEnd, Map_end;  // 현 시간을 저장할 변수
 float gap;
@@ -110,16 +111,12 @@ void Read_rank(void){
 }
 
 void PlayerMove(void){
-   int dx=0,dy=0;
+
    int UndoCheck = 0;
    char ch;
    ch = getch();
-  if(ch == 'e'){
-      system("clear");
-      printf("SEE YOU %s....\n", &UserName);
-      exit(0);
-   }
-   else if (ch =='h'||ch == 'H'||ch =='l'||ch == 'L'||ch =='k'||ch == 'K'||ch =='j'||ch == 'J'||ch =='u'||ch == 'U'){
+
+   if (ch =='h'||ch == 'H'||ch =='l'||ch == 'L'||ch =='k'||ch == 'K'||ch =='j'||ch == 'J'||ch =='u'||ch == 'U'){
       switch (ch) {
          case 'h':
          case 'H':
@@ -176,11 +173,23 @@ void PlayerMove(void){
 
 void Option(char ch){
   switch(ch){
+    case 'e':
+    case 'E':
+        system("clear");
+        system("clear");
+        printf("\n\n\nSEE YOU %s....\n\n\n", &UserName);
+        exit(0);
+    case 'u':
+    case 'U':
+        Undo_LoadMapFunc();
+        DrawMap();
+        getPlayerXY();
+        return;
     case 'd':
     case 'D':
       Map_stop = clock();  // d 옵션을 시작한 시간
       system("clear");
-      Read_command(); //undocount에 입력되는 거 해결해야함
+      Read_command(); //undocount에 입력되는 거 해결해야함 => 해결 됨
       DrawMap();
       Map_stopEnd = clock();  // d 옵션을 종료한 시간
       break;
@@ -223,8 +232,6 @@ void Option(char ch){
     DrawMap();
     return;
   }
-
-
 }
 
 void EndOneStage(){
